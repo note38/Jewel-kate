@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jewel Kate's 18th Birthday</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gold: #f5c842;
+        --purple: #7c3aed;
+        --purple-light: #a855f7;
+        --pink: #ec4899;
+        --pink-light: #f9a8d4;
+        --deep: #1a0a2e;
+        --cream: #fff7f0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--deep);
+        font-family: "Montserrat", sans-serif;
+        color: var(--cream);
+        overflow-x: hidden;
+      }
+
+      /* ─── STARFIELD ─── */
+      .stars {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            ellipse at 20% 30%,
+            rgba(124, 58, 237, 0.25) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 70%,
+            rgba(236, 72, 153, 0.18) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 50% 50%,
+            rgba(245, 200, 66, 0.08) 0%,
+            transparent 70%
+          ),
+          #0d0520;
+      }
+      .stars::before,
+      .stars::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+            1px 1px at 10% 15%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 30% 50%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 50% 20%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 70% 60%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 90% 35%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 15% 75%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 55% 85%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 80% 10%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            2px 2px at 25% 40%,
+            rgba(245, 200, 66, 0.9) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            2px 2px at 65% 25%,
+            rgba(168, 85, 247, 0.9) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            2px 2px at 45% 65%,
+            rgba(249, 168, 212, 0.9) 0%,
+            transparent 100%
+          );
+        background-size: 300px 300px, 400px 400px, 350px 350px, 500px 500px,
+          250px 250px, 450px 450px, 380px 380px, 420px 420px, 600px 600px,
+          700px 700px, 550px 550px;
+      }
+
+      /* ─── BUNTING ─── */
+      .bunting {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 10px;
+        overflow: hidden;
+      }
+      .bunting-svg {
+        width: 100%;
+        max-width: 700px;
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px 60px;
+      }
+
+      .name-title {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(3.5rem, 12vw, 7rem);
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--gold) 0%,
+          #fff 40%,
+          var(--pink-light) 70%,
+          var(--purple-light) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: none;
+        filter: drop-shadow(0 0 30px rgba(245, 200, 66, 0.4));
+        animation: fadeDown 0.9s ease both;
+        text-align: center;
+        line-height: 1;
+        margin-top: -10px;
+      }
+
+      .turning {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(0.75rem, 2.5vw, 1rem);
+        font-weight: 300;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--pink-light);
+        margin: 8px 0 0;
+        animation: fadeDown 1s 0.15s ease both;
+        opacity: 0;
+      }
+
+      .age-badge {
+        position: relative;
+        margin: 20px auto 0;
+        animation: popIn 0.8s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        opacity: 0;
+      }
+      .age-badge svg {
+        filter: drop-shadow(0 0 40px rgba(245, 200, 66, 0.5));
+      }
+      .age-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(4rem, 16vw, 8rem);
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .age-text sup {
+        font-size: 0.4em;
+        vertical-align: super;
+        color: var(--pink-light);
+        font-weight: 400;
+        letter-spacing: 0.05em;
+      }
+
+      .tagline {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.7);
+        margin: 4px 0 30px;
+        letter-spacing: 0.05em;
+        animation: fadeUp 0.8s 0.5s ease both;
+        opacity: 0;
+        text-align: center;
+      }
+
+      /* ─── DISCO BALL ─── */
+      .disco-wrap {
+        margin: 0 auto 30px;
+        animation: floatBall 3s ease-in-out infinite, fadeIn 0.8s 0.4s ease both;
+        opacity: 0;
+      }
+      @keyframes floatBall {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(5deg);
+        }
+      }
+
+      /* ─── INFO CARD ─── */
+      .info-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(245, 200, 66, 0.25);
+        border-radius: 24px;
+        padding: 36px 40px;
+        max-width: 500px;
+        width: 100%;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 0 60px rgba(124, 58, 237, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation: fadeUp 0.9s 0.6s ease both;
+        opacity: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 20%;
+        right: 20%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          var(--pink),
+          var(--purple-light),
+          transparent
+        );
+      }
+
+      .info-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .info-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .info-row:first-child {
+        padding-top: 0;
+      }
+
+      .info-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        background: rgba(124, 58, 237, 0.25);
+        border: 1px solid rgba(124, 58, 237, 0.4);
+      }
+
+      .info-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--pink-light);
+        margin-bottom: 3px;
+        font-weight: 600;
+      }
+      .info-value {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1rem, 3.5vw, 1.25rem);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.3;
+      }
+      .info-sub {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 2px;
+        letter-spacing: 0.03em;
+      }
+
+      /* ─── THEME SECTION ─── */
+      .theme-card {
+        max-width: 500px;
+        width: 100%;
+        margin-top: 20px;
+        background: rgba(236, 72, 153, 0.07);
+        border: 1px solid rgba(236, 72, 153, 0.3);
+        border-radius: 20px;
+        padding: 24px 32px;
+        animation: fadeUp 0.9s 0.75s ease both;
+        opacity: 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .theme-card::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--pink),
+          transparent
+        );
+      }
+      .theme-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--pink-light);
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .theme-name {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+        font-weight: 700;
+        background: linear-gradient(90deg, var(--pink), var(--purple-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .swatches {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .swatch {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+      .swatch:hover {
+        transform: scale(1.2);
+      }
+
+      /* ─── RSVP ─── */
+      .rsvp-card {
+        max-width: 500px;
+        width: 100%;
+        margin-top: 20px;
+        animation: fadeUp 0.9s 0.9s ease both;
+        opacity: 0;
+        text-align: center;
+      }
+      .rsvp-deadline {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 14px;
+      }
+      .rsvp-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 16px 48px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 30px rgba(236, 72, 153, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+      }
+      .rsvp-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 14px 40px rgba(236, 72, 153, 0.55);
+      }
+
+      /* ─── COUNTDOWN ─── */
+      .countdown-section {
+        max-width: 500px;
+        width: 100%;
+        margin-top: 20px;
+        animation: fadeUp 0.9s 0.85s ease both;
+        opacity: 0;
+      }
+      .countdown-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+        text-align: center;
+        font-weight: 600;
+      }
+      .countdown-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .cd-unit {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 14px 6px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+      .cd-num {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        font-weight: 700;
+        color: var(--gold);
+        line-height: 1;
+        display: block;
+      }
+      .cd-lbl {
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 4px;
+        display: block;
+      }
+
+      /* ─── SPARKLES ─── */
+      .sparkles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .sp {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        animation: sparkle var(--dur, 4s) var(--del, 0s) ease-in-out infinite;
+        opacity: 0;
+      }
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0) translateY(0);
+        }
+        20% {
+          opacity: 1;
+          transform: scale(1) translateY(-10px);
+        }
+        80% {
+          opacity: 0.6;
+          transform: scale(0.5) translateY(-30px);
+        }
+      }
+
+      /* ─── FOOTER ─── */
+      .footer {
+        text-align: center;
+        padding: 30px 20px 40px;
+        position: relative;
+        z-index: 10;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .hearts {
+        font-size: 1rem;
+        background: linear-gradient(90deg, var(--pink), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes popIn {
+        from {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes glimmer {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+
+    <!-- Floating sparkles -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- BUNTING -->
+    <div class="bunting">
+      <svg
+        class="bunting-svg"
+        viewBox="0 0 700 80"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0,20 Q87.5,60 175,20 Q262.5,60 350,20 Q437.5,60 525,20 Q612.5,60 700,20"
+          fill="none"
+          stroke="rgba(255,255,255,.3)"
+          stroke-width="1.5"
+        />
+        <!-- flags -->
+        <polygon points="35,22 55,22 45,48" fill="#f5c842" />
+        <polygon points="65,32 85,32 75,58" fill="#7c3aed" />
+        <polygon points="120,22 140,22 130,48" fill="#ec4899" />
+        <polygon points="155,34 175,34 165,60" fill="#f5c842" />
+        <polygon points="210,22 230,22 220,48" fill="#7c3aed" />
+        <polygon points="245,34 265,34 255,60" fill="#ec4899" />
+        <polygon points="300,22 320,22 310,48" fill="#f5c842" />
+        <polygon points="335,34 355,34 345,60" fill="#a855f7" />
+        <polygon points="390,22 410,22 400,48" fill="#ec4899" />
+        <polygon points="425,34 445,34 435,60" fill="#f5c842" />
+        <polygon points="480,22 500,22 490,48" fill="#7c3aed" />
+        <polygon points="515,34 535,34 525,60" fill="#ec4899" />
+        <polygon points="570,22 590,22 580,48" fill="#f5c842" />
+        <polygon points="605,34 625,34 615,60" fill="#a855f7" />
+        <polygon points="655,22 675,22 665,48" fill="#ec4899" />
+      </svg>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1 class="name-title">Jewel Kate</h1>
+      <p class="turning">is turning</p>
+
+      <!-- Age Badge -->
+      <div class="age-badge">
+        <svg width="220" height="120" viewBox="0 0 220 120">
+          <ellipse
+            cx="110"
+            cy="60"
+            rx="100"
+            ry="52"
+            fill="rgba(124,58,237,.12)"
+            stroke="rgba(245,200,66,.3)"
+            stroke-width="1.5"
+          />
+          <ellipse
+            cx="110"
+            cy="60"
+            rx="92"
+            ry="44"
+            fill="none"
+            stroke="rgba(236,72,153,.2)"
+            stroke-width="1"
+            stroke-dasharray="4 4"
+          />
+        </svg>
+        <div class="age-text">18<sup>th</sup></div>
+      </div>
+
+      <!-- Disco Ball -->
+      <div class="disco-wrap">
+        <svg
+          width="70"
+          height="90"
+          viewBox="0 0 70 90"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            x1="35"
+            y1="0"
+            x2="35"
+            y2="14"
+            stroke="rgba(255,255,255,.4)"
+            stroke-width="2"
+          />
+          <circle
+            cx="35"
+            cy="50"
+            r="28"
+            fill="url(#discoBg)"
+            stroke="rgba(255,255,255,.2)"
+            stroke-width="1"
+          />
+          <defs>
+            <radialGradient id="discoBg" cx="35%" cy="30%">
+              <stop offset="0%" stop-color="#e0c8ff" />
+              <stop offset="50%" stop-color="#9b59b6" />
+              <stop offset="100%" stop-color="#4a0080" />
+            </radialGradient>
+          </defs>
+          <!-- tiles -->
+          <g fill="none" stroke="rgba(255,255,255,.25)" stroke-width=".5">
+            <line x1="10" y1="35" x2="60" y2="35" />
+            <line x1="8" y1="43" x2="62" y2="43" />
+            <line x1="8" y1="51" x2="62" y2="51" />
+            <line x1="10" y1="59" x2="60" y2="59" />
+            <line x1="14" y1="67" x2="56" y2="67" />
+            <line x1="22" y1="28" x2="22" y2="72" />
+            <line x1="30" y1="22" x2="30" y2="78" />
+            <line x1="38" y1="22" x2="38" y2="78" />
+            <line x1="46" y1="28" x2="46" y2="72" />
+            <line x1="54" y1="34" x2="54" y2="66" />
+          </g>
+          <!-- shine spots -->
+          <circle cx="26" cy="38" r="2.5" fill="rgba(255,255,200,.8)" />
+          <circle cx="42" cy="44" r="2" fill="rgba(255,200,255,.8)" />
+          <circle cx="32" cy="56" r="2.5" fill="rgba(200,220,255,.9)" />
+          <circle cx="48" cy="58" r="1.5" fill="rgba(255,255,200,.8)" />
+          <circle cx="20" cy="52" r="1.5" fill="rgba(255,180,200,.8)" />
+        </svg>
+      </div>
+
+      <p class="tagline">Let's raise a glass and celebrate!</p>
+
+      <!-- INFO CARD -->
+      <div class="info-card">
+        <div class="info-row">
+          <div class="info-icon">🗓️</div>
+          <div>
+            <div class="info-label">Date</div>
+            <div class="info-value">Saturday, June 13, 2026</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🕖</div>
+          <div>
+            <div class="info-label">Time</div>
+            <div class="info-value">7:00 PM</div>
+            <div class="info-sub">Doors open at 6:30 PM</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Venue</div>
+            <div class="info-value">10 Rambutan</div>
+            <div class="info-sub">Nayong Silangan Subd</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THEME CARD -->
+      <div class="theme-card">
+        <div class="theme-label">Dress Code</div>
+        <div class="theme-name">Casual Pink &amp; Swimwear</div>
+        <div class="swatches">
+          <div class="swatch" style="background: #f9a8d4"></div>
+          <div class="swatch" style="background: #ec4899"></div>
+          <div class="swatch" style="background: #db2777"></div>
+          <div class="swatch" style="background: #fce7f3"></div>
+          <div class="swatch" style="background: #be185d"></div>
+          <div class="swatch" style="background: #ff6b9d"></div>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN -->
+      <div class="countdown-section">
+        <div class="countdown-label">✦ Counting down to the night ✦</div>
+        <div class="countdown-grid">
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-days">--</span
+            ><span class="cd-lbl">Days</span>
+          </div>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-hours">--</span
+            ><span class="cd-lbl">Hours</span>
+          </div>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-mins">--</span
+            ><span class="cd-lbl">Mins</span>
+          </div>
+          <div class="cd-unit">
+            <span class="cd-num" id="cd-secs">--</span
+            ><span class="cd-lbl">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RSVP -->
+      <div class="rsvp-card">
+        <div class="rsvp-deadline">🌸 Please RSVP by June 13, 2026</div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div class="hearts">♥ ♥ ♥</div>
+      <p style="margin-top: 8px">
+        See you on the dance floor, Jewel Kate turns 18 ✨
+      </p>
+    </div>
+
+    <script>
+      // Countdown
+      function updateCountdown() {
+        const event = new Date("2026-06-13T19:00:00");
+        const now = new Date();
+        const diff = event - now;
+        if (diff <= 0) {
+          document.getElementById("cd-days").textContent = "🎉";
+          document.getElementById("cd-hours").textContent = "🎉";
+          document.getElementById("cd-mins").textContent = "🎉";
+          document.getElementById("cd-secs").textContent = "🎉";
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById("cd-days").textContent = String(d).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cd-hours").textContent = String(h).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cd-mins").textContent = String(m).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("cd-secs").textContent = String(s).padStart(
+          2,
+          "0"
+        );
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // Sparkles
+      const colors = ["#f5c842", "#ec4899", "#a855f7", "#f9a8d4", "#fff"];
+      const sp = document.getElementById("sparkles");
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement("div");
+        el.className = "sp";
+        el.style.cssText = `
+      left:${Math.random() * 100}%;
+      top:${Math.random() * 100}%;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      --dur:${3 + Math.random() * 4}s;
+      --del:${Math.random() * 5}s;
+      width:${2 + Math.random() * 4}px;
+      height:${2 + Math.random() * 4}px;
+      box-shadow: 0 0 6px currentColor;
+    `;
+        sp.appendChild(el);
+      }
+    </script>
+  </body>
+</html>
