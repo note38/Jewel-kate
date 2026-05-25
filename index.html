@@ -439,6 +439,29 @@
         transform: translateY(-3px) scale(1.03);
         box-shadow: 0 14px 40px rgba(236, 72, 153, 0.55);
       }
+      .rsvp-notes {
+        margin-top: 24px;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+      }
+      .rsvp-notes p {
+        background: rgba(236, 72, 153, 0.08);
+        border: 1px solid rgba(236, 72, 153, 0.35);
+        padding: 8px 20px;
+        border-radius: 99px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--pink-light);
+        text-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
 
       /* ─── COUNTDOWN ─── */
       .countdown-section {
@@ -1126,6 +1149,10 @@
         <a class="rsvp-btn" href="https://web.facebook.com/jewel.edquilag">
           💌 &nbsp; RSVP Now
         </a>
+        <div class="rsvp-notes">
+          <p>⚠️ strictly no +1 allowed</p>
+          <p>👶 no kids allowed</p>
+        </div>
       </div>
     </section>
 
